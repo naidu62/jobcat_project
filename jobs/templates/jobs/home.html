@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container mx-auto p-6 md:p-10">
+        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
+            <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">Available Job Openings</h1>
+
+            <!-- Search Form -->
+            <form action="{% url 'search_results' %}" method="get" class="mb-8">
+                <div class="flex items-center space-x-4">
+                    <input type="text" name="q" placeholder="Search for jobs..."
+                           class="flex-grow rounded-xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow duration-300">
+                    <button type="submit"
+                            class="bg-indigo-600 text-white rounded-xl px-6 py-2 font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300">
+                        Search
+                    </button>
+                </div>
+            </form>
+
+            <!-- Loop through each job and display its details -->
+            <div class="space-y-6">
+                {% if jobs %}
+                    {% for job in jobs %}
+                        <a href="{% url 'job_detail' job.pk %}" class="block">
+                            <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                                <h2 class="text-2xl font-semibold text-gray-700 mb-1">{{ job.title }}</h2>
+                                <h3 class="text-lg font-medium text-gray-600 mb-2">{{ job.company }}</h3>
+                                <p class="text-sm text-gray-500 mb-4">{{ job.description }}</p>
+                                <p class="text-md text-gray-500 mb-2">Location: {{ job.location }}</p>
+                                <p class="text-md text-gray-500 mb-4">Experience: {{ job.experience_level }}</p>
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                                    <span class="text-xl font-bold text-indigo-600 mb-2 sm:mb-0">{{ job.salary }}</span>
+                                    <span class="text-sm text-gray-400">Posted on: {{ job.created_at|date:"F d, Y" }}</span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center text-gray-500">No jobs found that match your search query.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
