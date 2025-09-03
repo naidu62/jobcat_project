@@ -1,21 +1,21 @@
-# Python cache
+# Python
+*.pyc
 __pycache__/
-*.py[cod]
 *.pyo
+*.pyd
+*.sqlite3
+
+# Django
+db.sqlite3
+/staticfiles/
+/media/
 
 # Virtual environment
 venv/
 
-# SQLite database
-db.sqlite3
-
-# Django static/media
-staticfiles/
-media/
-
-# VS Code / IDE
+# IDEs
 .vscode/
 .idea/
 
-# OS files
+# macOS
 .DS_Store
