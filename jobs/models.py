@@ -4,13 +4,18 @@ class Job(models.Model):
     """
     A model to represent a job listing.
     """
+    EXPERIENCE_CHOICES = [
+        ("Fresher", "Fresher"),
+        ("Mid", "Mid Level"),
+        ("Senior", "Senior"),
+    ]
+    
     title = models.CharField(max_length=200)
     company = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    experience_level = models.CharField(max_length=10, choices=EXPERIENCE_CHOICES)
     description = models.TextField()
-    salary = models.CharField(max_length=100) # Using CharField to allow for ranges like "$50k - $60k"
-    location = models.CharField(max_length=200, default='Remote')
-    experience_level = models.CharField(max_length=100, default='Entry-level')
-    created_at = models.DateTimeField(auto_now_add=True)
+    posted_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """
