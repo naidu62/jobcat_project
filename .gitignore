@@ -1,33 +1,24 @@
 # Python
+*.pyc
 __pycache__/
-*.py[cod]
 *.pyo
 *.pyd
-*.pdb
+*.sqlite3
+
+# Django
+db.sqlite3
+/staticfiles/
+/media/
 
 # Virtual environment
 venv/
-.venv/
 
-# SQLite database
-db.sqlite3
-
-# Django static & media
-staticfiles/
-media/
-
-# Environment & secrets
-.env
-*.env
-
-# IDE / Editor
+# IDEs
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# MacOS
+# macOS
 .DS_Store
 
-# Logs
-*.log
+# environment
+.env
