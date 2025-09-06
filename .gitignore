@@ -1,24 +1,29 @@
 # Python
 *.pyc
 __pycache__/
+
+# Bytecode / compiled / caches
 *.pyo
 *.pyd
+
+# Databases
 *.sqlite3
+db.sqlite3
 
 # Django
-db.sqlite3
 /staticfiles/
 /media/
 
 # Virtual environment
 venv/
+.env
 
-# IDEs
+# Editors / IDEs
 .vscode/
 .idea/
 
 # macOS
 .DS_Store
 
-# environment
-.env
+# Logs
+*.log
