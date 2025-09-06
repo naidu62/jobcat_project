@@ -1,59 +1,466 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Board</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>JobCat 🐱 – Find Your Dream Job</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --dark-color: #1e293b;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1e40af 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-hero {
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .category-pill {
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: var(--secondary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+            display: inline-block;
+        }
+        
+        .category-pill:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .job-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            height: 100%;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .job-title {
+            color: var(--dark-color);
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .job-title:hover {
+            color: var(--primary-color);
+        }
+        
+        .job-company {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .job-meta {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .job-meta i {
+            margin-right: 0.25rem;
+        }
+        
+        .btn-apply {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-apply:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+        
+        .sidebar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-title {
+            color: var(--dark-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .recommended-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .recommended-item:last-child {
+            border-bottom: none;
+        }
+        
+        .recommended-item a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .recommended-item a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+        
+        .footer h5 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: white;
+        }
+        
+        .search-form {
+            position: relative;
+        }
+        
+        .search-input {
+            border-radius: 50px;
+            border: 2px solid #e2e8f0;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="container mx-auto p-6 md:p-10">
-        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
-            <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">Available Job Openings</h1>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand text-primary" href="{% url 'home' %}">
+                <i class="bi bi-briefcase-fill me-2"></i>JobCat
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-semibold" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#jobs">Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#scholarships">Scholarships</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#syllabus">Syllabus</a>
+                    </li>
+                </ul>
+                
+                <!-- Search Bar -->
+                <form class="d-flex me-3 search-form" action="{% url 'search_results' %}" method="get">
+                    <i class="bi bi-search search-icon"></i>
+                    <input class="form-control search-input" type="search" name="q" placeholder="Search jobs..." aria-label="Search">
+                </form>
+                
+                <a class="btn btn-outline-primary fw-semibold" href="#login">Login</a>
+            </div>
+        </div>
+    </nav>
 
-            <!-- Search Form -->
-            <form action="{% url 'search_results' %}" method="get" class="mb-8">
-                <div class="flex items-center space-x-4">
-                    <input type="text" name="q" placeholder="Search for jobs..."
-                           class="flex-grow rounded-xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow duration-300">
-                    <button type="submit"
-                            class="bg-indigo-600 text-white rounded-xl px-6 py-2 font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300">
-                        Search
-                    </button>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Find Your Dream Job Today</h1>
+                    <p class="hero-subtitle">Discover thousands of opportunities from top companies. Your next career move starts here.</p>
+                    <a href="#jobs" class="btn btn-light btn-hero">
+                        <i class="bi bi-search me-2"></i>Browse Jobs
+                    </a>
                 </div>
-            </form>
+                <div class="col-lg-6 text-center">
+                    <i class="bi bi-briefcase-fill" style="font-size: 8rem; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <!-- Loop through each job and display its details -->
-            <div class="space-y-6">
-                {% if jobs %}
+    <!-- Quick Categories -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="h3 fw-bold text-dark">Browse by Category</h2>
+                <p class="text-muted">Find jobs in your field of interest</p>
+            </div>
+            <div class="text-center">
+                <a href="#" class="category-pill">Engineering</a>
+                <a href="#" class="category-pill">Banking</a>
+                <a href="#" class="category-pill">Government</a>
+                <a href="#" class="category-pill">IT & Software</a>
+                <a href="#" class="category-pill">Healthcare</a>
+                <a href="#" class="category-pill">Marketing</a>
+                <a href="#" class="category-pill">Others</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Job Listings -->
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="h4 fw-bold text-dark mb-0">Latest Job Openings</h2>
+                    <span class="badge bg-primary fs-6">{{ jobs|length }} Jobs Available</span>
+                </div>
+                
+                <div class="row" id="jobs">
                     {% for job in jobs %}
-                        <a href="{% url 'job_detail' job.pk %}" class="block">
-                            <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow duration-300">
-                                <h2 class="text-2xl font-semibold text-gray-700 mb-1">{{ job.title }}</h2>
-                                <h3 class="text-lg font-medium text-gray-600 mb-2">{{ job.company }}</h3>
-                                <p class="text-sm text-gray-500 mb-4">{{ job.description }}</p>
-                                <p class="text-md text-gray-500 mb-2">Location: {{ job.location }}</p>
-                                <p class="text-md text-gray-500 mb-4">Experience: {{ job.experience_level }}</p>
-                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                                    <span class="text-xl font-bold text-indigo-600 mb-2 sm:mb-0">{{ job.salary }}</span>
-                                    <span class="text-sm text-gray-400">Posted on: {{ job.created_at|date:"F d, Y" }}</span>
+                    <div class="col-md-6 mb-4">
+                        <div class="job-card">
+                            <a href="{% url 'job_detail' job.pk %}" class="job-title">{{ job.title }}</a>
+                            <div class="job-company">
+                                <i class="bi bi-building me-1"></i>{{ job.company }}
+                            </div>
+                            <div class="job-meta">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <i class="bi bi-geo-alt me-1"></i>{{ job.location }}
+                                    </div>
+                                    <div class="col-6">
+                                        <i class="bi bi-person-workspace me-1"></i>{{ job.experience_level }}
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <i class="bi bi-calendar me-1"></i>Posted {{ job.created_at|timesince }} ago
                                 </div>
                             </div>
-                        </a>
+                            <button class="btn btn-apply">
+                                <i class="bi bi-send me-1"></i>Apply Now
+                            </button>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="text-center py-5">
+                            <i class="bi bi-briefcase text-muted" style="font-size: 4rem;"></i>
+                            <h3 class="mt-3 text-muted">No jobs available at the moment</h3>
+                            <p class="text-muted">Check back later for new opportunities!</p>
+                        </div>
+                    </div>
                     {% endfor %}
-                {% else %}
-                    <p class="text-center text-gray-500">No jobs found that match your search query.</p>
-                {% endif %}
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Recommended Jobs -->
+                <div class="sidebar-card">
+                    <h5 class="sidebar-title">
+                        <i class="bi bi-star-fill text-warning me-2"></i>Recommended Jobs
+                    </h5>
+                    <div class="recommended-item">
+                        <a href="#">Senior Software Engineer</a>
+                        <div class="text-muted small">Tech Corp • San Francisco</div>
+                    </div>
+                    <div class="recommended-item">
+                        <a href="#">Product Manager</a>
+                        <div class="text-muted small">StartupXYZ • Remote</div>
+                    </div>
+                    <div class="recommended-item">
+                        <a href="#">Data Scientist</a>
+                        <div class="text-muted small">DataCorp • New York</div>
+                    </div>
+                    <div class="recommended-item">
+                        <a href="#">UX Designer</a>
+                        <div class="text-muted small">DesignStudio • Austin</div>
+                    </div>
+                </div>
+                
+                <!-- Scholarships -->
+                <div class="sidebar-card">
+                    <h5 class="sidebar-title">
+                        <i class="bi bi-trophy-fill text-success me-2"></i>Scholarships
+                    </h5>
+                    <div class="recommended-item">
+                        <a href="#">Tech Scholarship 2024</a>
+                        <div class="text-muted small">$5,000 • Deadline: Dec 31</div>
+                    </div>
+                    <div class="recommended-item">
+                        <a href="#">Women in STEM Grant</a>
+                        <div class="text-muted small">$3,000 • Deadline: Jan 15</div>
+                    </div>
+                    <div class="recommended-item">
+                        <a href="#">Merit Scholarship</a>
+                        <div class="text-muted small">$2,500 • Deadline: Feb 1</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>
+                        <i class="bi bi-briefcase-fill me-2"></i>JobCat
+                    </h5>
+                    <p class="text-light">Connecting talented professionals with amazing career opportunities. Your journey to success starts here.</p>
+                    <div class="d-flex">
+                        <a href="#" class="text-light me-3"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-light me-3"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-light me-3"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>About</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">GDPR</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Job Tips</a></li>
+                        <li><a href="#">Resume Builder</a></li>
+                        <li><a href="#">Interview Prep</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: #374151;">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-light">&copy; 2024 JobCat. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 text-light">Made with <i class="bi bi-heart-fill text-danger"></i> for job seekers</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
