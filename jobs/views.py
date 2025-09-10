@@ -3,7 +3,7 @@ from .models import Job
 
 # Create your views here.
 def home(request):
-    jobs = Job.objects.all().order_by('-created_at')[:10]
+    jobs = Job.objects.all().order_by('-posted_date')[:10]
     context = {
         'jobs': jobs
     }
