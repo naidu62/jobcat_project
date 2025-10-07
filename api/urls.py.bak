@@ -1,0 +1,9 @@
+cat > api/urls.py <<'PY'
+from django.urls import path
+from . import views
+
+app_name = "api"   # optional but useful
+urlpatterns = [
+    path('', views.api_home, name='api_home'),
+]
+PY
