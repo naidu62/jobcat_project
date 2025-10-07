@@ -12,7 +12,7 @@ SECRET_KEY = 'django-insecure-o#=z7c^e_b)75w!a312i0w5s$@v*^m!*9*!w_p7_v$z!v@!z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["app.jobcat.in"] # We will change this later for security. For now, it allows all hosts.
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"] # We will change this later for security. For now, it allows all hosts.
 
 CSRF_TRUSTED_ORIGINS = ["https://app.jobcat.in"]
 
@@ -25,8 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # We are adding the 'jobs' app here
+    'rest_framework',   # We are adding the 'jobs' app here
     'jobs.apps.JobsConfig',
+    'api',
+ 
+    
 ]
 
 MIDDLEWARE = [
@@ -64,17 +67,16 @@ WSGI_APPLICATION = 'jobcat_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Temporary local DB for development
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'VNlaxmi.143000',
-        'HOST': 'jobcat-database.cf4oyg48isvf.ap-northeast-1.rds.amazonaws.com',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
