@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import JobNotification, VacancyDetail, JobSeeker, JobApplication, JobNotification as JobNotificationAlert
+from .models import JobNotification, VacancyDetail, JobSeeker, JobApplication, JobNotificationAlert
 
 
 # ========== VacancyDetail Inline ==========
